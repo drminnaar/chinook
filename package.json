@@ -1,0 +1,25 @@
+{
+  "name": "chinook-dotnetcore-3",
+  "version": "1.0.0",
+  "description": "This project demonstrates various API design principles",
+  "scripts": {
+    "build": "dotnet build ./src",
+    "catalog": "dotnet watch --project ./src/Catalog/Chinook.Catalog.Api run",
+    "operations": "dotnet watch --project ./src/Operations/Chinook.Operations.Api run",
+    "sales": "dotnet watch --project ./src/Sales/Chinook.Sales.Api run",
+    "start": "concurrently \"npm run catalog\" \"npm run operations\" \"npm run sales\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drminnaar/chinook-dotnetcore-3.git"
+  },
+  "author": "Doug Minnaar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/drminnaar/chinook-dotnetcore-3/issues"
+  },
+  "homepage": "https://github.com/drminnaar/chinook-dotnetcore-3#readme",
+  "devDependencies": {
+    "concurrently": "^5.0.2"
+  }
+}

@@ -1,0 +1,629 @@
+{
+	"info": {
+		"_postman_id": "191aaa49-7de1-4981-88c9-36020b94f0d3",
+		"name": "Chinook Catalog Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tracks",
+			"item": [
+				{
+					"name": "Get Tracks",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks?",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "powerslave",
+									"disabled": true
+								},
+								{
+									"key": "artist",
+									"value": "ac/dc",
+									"disabled": true
+								},
+								{
+									"key": "composer",
+									"value": "smith",
+									"disabled": true
+								},
+								{
+									"key": "genre",
+									"value": "tv",
+									"disabled": true
+								},
+								{
+									"key": "media-type",
+									"value": "mpeg",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "phantom",
+									"disabled": true
+								},
+								{
+									"key": "price-from",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "price-to",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-name",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tracks By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks/22",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tracks for playlist",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/playlists/13/tracks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"playlists",
+								"13",
+								"tracks"
+							],
+							"query": [
+								{
+									"key": "album",
+									"value": "powerslave",
+									"disabled": true
+								},
+								{
+									"key": "artist",
+									"value": "ac/dc",
+									"disabled": true
+								},
+								{
+									"key": "composer",
+									"value": "smith",
+									"disabled": true
+								},
+								{
+									"key": "genre",
+									"value": "tv",
+									"disabled": true
+								},
+								{
+									"key": "media-type",
+									"value": "mpeg",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "phantom",
+									"disabled": true
+								},
+								{
+									"key": "price-from",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "price-to",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-name",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tracks Options",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tracks By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks/100002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks",
+								"100002"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Track",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Party Now - {{$guid}}\",\n\t\"composer\": \"Bob\",\n\t\"price\": 2.5,\n\t\"bytes\": 234234,\n\t\"milliseconds\": 42343,\n\t\"albumId\": 3,\n\t\"genreId\": 1,\n\t\"mediaTypeId\": 1\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Track",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/xml"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Party Now - {{$guid}}\",\n\t\"composer\": \"My Update\",\n\t\"price\": 4.5,\n\t\"bytes\": 23234,\n\t\"milliseconds\": 423,\n\t\"albumId\": 2,\n\t\"genreId\": 2,\n\t\"mediaTypeId\": 2\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/v1/tracks/100003",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"tracks",
+								"100003"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Playlists",
+			"item": [
+				{
+					"name": "Tracks",
+					"item": [
+						{
+							"name": "Add Tracks To Playlist",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/v1/playlists/13/tracks/1,2,3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"v1",
+										"playlists",
+										"13",
+										"tracks",
+										"1,2,3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Tracks From Playlist",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:5000/playlists/1015/tracks/5,10,1,2,3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"playlists",
+										"1015",
+										"tracks",
+										"5,10,1,2,3"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Get Playlists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/playlists?order=name&page=2&limit=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"playlists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "classical",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "name"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Playlists By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/playlists/1015",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"playlists",
+								"1015"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Playlists by Tracks By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/tracks/10/playlists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"tracks",
+								"10",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete playlist by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/playlists/1014",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"playlists",
+								"1014"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get OPTIONS",
+					"request": {
+						"method": "OPTIONS",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5000/v1/playlists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"v1",
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create playlist",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Top 100 - {{$guid}}\",\r\n\t\"trackIds\": [ 5, 10, 15, 20 ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/playlists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"playlists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update playlist",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"name\": \"Top 100 - {{$guid}}\",\r\n\t\"trackIds\": [ 5, 10, 15, 20, 25 ]\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/playlists/10152",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"playlists",
+								"10152"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

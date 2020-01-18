@@ -1,0 +1,248 @@
+{
+	"info": {
+		"_postman_id": "55e6af97-4c3f-45d7-8c72-91beb7a87f52",
+		"name": "Chinook Sales Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "Get Invoices By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5002/v1/invoices/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"v1",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Invoices By Query",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5002/v1/invoices",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"v1",
+								"invoices"
+							],
+							"query": [
+								{
+									"key": "customer",
+									"value": "brown",
+									"disabled": true
+								},
+								{
+									"key": "customer-id",
+									"value": "35",
+									"disabled": true
+								},
+								{
+									"key": "from-date",
+									"value": "gte:2010-01-01",
+									"disabled": true
+								},
+								{
+									"key": "to-date",
+									"value": "lte:2011-01-01",
+									"disabled": true
+								},
+								{
+									"key": "from-total",
+									"value": "gte:6",
+									"disabled": true
+								},
+								{
+									"key": "to-total",
+									"value": "lte:10",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "Dundas Street",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "new york",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "ab",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "france",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "75009",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "-total",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get Customers By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5002/v1/customers/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"v1",
+								"customers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customers By Query",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5002/v1/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5002",
+							"path": [
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "first-name",
+									"value": "luis",
+									"disabled": true
+								},
+								{
+									"key": "last-name",
+									"value": "pareek",
+									"disabled": true
+								},
+								{
+									"key": "company",
+									"value": "telus",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "110 Raeburn Pl",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "london",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "AB",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "portugal",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "h-1073",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "+1 (902) 450-0450",
+									"disabled": true
+								},
+								{
+									"key": "fax",
+									"value": "+1 (212) 221-4679",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "robbrown@shaw.ca",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "company",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

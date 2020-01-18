@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "database": "chinook",
+            "dialect": "PostgreSQL",
+            "name": "chinook",
+            "password": "password",
+            "port": 5432,
+            "server": "localhost",
+            "username": "postgres"
+        }
+    ]
+}

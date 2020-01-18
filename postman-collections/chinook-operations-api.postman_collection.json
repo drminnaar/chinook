@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "b677be63-6e4c-4ec0-b257-42cf08f1fa5a",
+		"name": "Chinook Operations Api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Get Employees by Employee Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/v1/employees/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"v1",
+								"employees",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Employee Address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\": \"{{$randomStreetAddress}}\",\n\t\"city\": \"{{$randomCity}}\",\n\t\"country\": \"{{$randomCountry}}\",\n\t\"state\": \"{{$randomLoremWord}}\",\n\t\"postalCode\": \"{{$randomInt}}{{$randomInt}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/v1/employees/1001/address",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"v1",
+								"employees",
+								"1001",
+								"address"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Employees by Query Parameters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5001/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"v1",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "first-name",
+									"value": "jane",
+									"disabled": true
+								},
+								{
+									"key": "last-name",
+									"value": "edwards",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "general manager",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "jasper",
+									"disabled": true
+								},
+								{
+									"key": "city",
+									"value": "calgary",
+									"disabled": true
+								},
+								{
+									"key": "state",
+									"value": "ab",
+									"disabled": true
+								},
+								{
+									"key": "country",
+									"value": "canada",
+									"disabled": true
+								},
+								{
+									"key": "code",
+									"value": "T1K 5N8",
+									"disabled": true
+								},
+								{
+									"key": "phone",
+									"value": "+1 (403) 456-9986",
+									"disabled": true
+								},
+								{
+									"key": "fax",
+									"value": "+1 (403) 262-6712",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "laura@chinookcorp.com",
+									"disabled": true
+								},
+								{
+									"key": "from-birthdate",
+									"value": "gte:1960-01-01",
+									"disabled": true
+								},
+								{
+									"key": "to-birthdate",
+									"value": "lte:1970-01-01",
+									"disabled": true
+								},
+								{
+									"key": "from-hiredate",
+									"value": "gte:2003-01-01",
+									"disabled": true
+								},
+								{
+									"key": "to-hiredate",
+									"value": "lte:2004-01-01",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "last-name",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "4",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0a40c86f-9fdc-47ab-847c-98be776984e2",
+								"exec": [
+									"function getRandomBirthDate() {",
+									"    const year = _.random(1960,2000);",
+									"    const month = _.random(1,12);",
+									"    const day = _.random(1,28);",
+									"    return `${year}-${month}-${day}`;",
+									"}",
+									"",
+									"function getHireDate() {",
+									"    const now = new Date();",
+									"    const year = now.getFullYear();",
+									"    const month = now.getMonth() + 1;",
+									"    const day = now.getDate();",
+									"    return `${year}-${month}-${day}`;",
+									"}",
+									"",
+									"pm.environment.set('$randomBirthDate', getRandomBirthDate());",
+									"pm.environment.set('$hireDate', getHireDate());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"FirstName\": \"{{$randomFirstName}}\",\n\t\"LastName\": \"{{$randomLastName}}\",\n\t\"Title\": \"{{$randomJobTitle}}\",\n\t\"BirthDate\": \"{{$randomBirthDate}}\",\n\t\"HireDate\": \"{{$hireDate}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"v1",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Path Employee",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "0a40c86f-9fdc-47ab-847c-98be776984e2",
+								"exec": [
+									"function getRandomBirthDate() {",
+									"    const year = _.random(1960,2000);",
+									"    const month = _.random(1,12);",
+									"    const day = _.random(1,28);",
+									"    return `${year}-${month}-${day}`;",
+									"}",
+									"",
+									"function getHireDate() {",
+									"    const now = new Date();",
+									"    const year = now.getFullYear();",
+									"    const month = now.getMonth() + 1;",
+									"    const day = now.getDate();",
+									"    return `${year}-${month}-${day}`;",
+									"}",
+									"",
+									"pm.environment.set('$randomBirthDate', getRandomBirthDate());",
+									"pm.environment.set('$hireDate', getHireDate());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"op\": \"replace\",\n    \"path\": \"/firstName\",\n    \"value\": \"{{$randomFirstName}}\"\n  },\n    {\n    \"op\": \"replace\",\n    \"path\": \"/lastName\",\n    \"value\": \"{{$randomLastName}}\"\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5001/v1/employees/1001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"v1",
+								"employees",
+								"1001"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e06a5709-960f-47ee-aedc-7640049d6320",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c726fc36-19ef-49af-9c29-c59d0cc72409",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
