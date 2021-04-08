@@ -25,7 +25,10 @@ namespace Chinook.Operations.Application.Employees.Commands.UpdateEmployeeAddres
 
         private async Task<Unit> UpdateEmployeeAddress(UpdateEmployeeAddressCommand address, CancellationToken cancellationToken)
         {
-            var employee = await _context.Employees.FindAsync(address.EmployeeId);
+            var employee = await _context
+                .Employees
+                .FirstOrDefaultAsync(e => e.Id == address.EmployeeId, cancellationToken)
+                .ConfigureAwait(false);
 
             if (employee == null)
                 throw new EntityNotFoundException($"An employee having id '{address.EmployeeId}' could not be found");

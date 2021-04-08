@@ -29,7 +29,8 @@ namespace Chinook.Catalog.Application.Playlists.Commands.DeletePlaylist
         {
             var playlist = await _context
                 .Playlists
-                .FirstOrDefaultAsync(playlist => playlist.Id == playlistId);
+                .FirstOrDefaultAsync(playlist => playlist.Id == playlistId, cancellationToken)
+                .ConfigureAwait(false);
 
             if (playlist == null)
                 throw new EntityNotFoundException($"A playlist having id '{playlistId}' could not be found");
@@ -37,7 +38,8 @@ namespace Chinook.Catalog.Application.Playlists.Commands.DeletePlaylist
             var playlistTracks = await _context
                 .PlaylistTracks
                 .Where(e => e.PlaylistId == playlistId)
-                .ToListAsync();
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Suppress))
             {

@@ -33,7 +33,8 @@ namespace Chinook.Catalog.Application.Playlists.CommandsAddTracksToPlaylist
         {
             var playlistFromDb = await _context
                 .Playlists
-                .FirstOrDefaultAsync(e => e.Id == playlistId);
+                .FirstOrDefaultAsync(e => e.Id == playlistId, cancellationToken)
+                .ConfigureAwait(false);
 
             if (playlistFromDb == null)
                 throw new EntityNotFoundException($"A playlist having id '{playlistId}' could not be found");
@@ -48,7 +49,8 @@ namespace Chinook.Catalog.Application.Playlists.CommandsAddTracksToPlaylist
                 .AsNoTracking()
                 .Where(pt => pt.PlaylistId == playlistId && newTrackIds.Contains(pt.TrackId))
                 .Select(pt => pt.TrackId)
-                .ToListAsync();
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             var tracksForAdd = newTrackIds
                 .Except(existingTrackIds)

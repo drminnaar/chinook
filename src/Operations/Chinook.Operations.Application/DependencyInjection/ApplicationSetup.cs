@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using AutoMapper;
+﻿using System.Reflection;
 using Chinook.Operations.Application.Employees.Queries.GetEmployee.Filters;
 using Chinook.Operations.Application.Employees.Queries.GetEmployee.Orders;
 using Chinook.Operations.Application.Services;
@@ -22,7 +20,6 @@ namespace Chinook.Operations.Application.DependencyInjection
                 .AddScoped<IEntityOrderBuilder<Employee>, EmployeeOrderBuilder>()
                 .AddScoped<IBirthDateValidationService, BirthDateValidationService>()
                 .AddScoped<IEmailAssignmentService, DummyEmailAssignmentService>()
-                .AddSingleton<RandomNumberGenerator>()
                 .AddScoped<IFaxNumberAssignmentService, DummyFaxNumberAssignmentService>()
                 .AddScoped<IPhoneNumberAssignmentService, DummyPhoneNumberAssignmentService>()
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));

@@ -37,7 +37,8 @@ namespace Chinook.Catalog.Application.Tracks.Queries.GetTrack
                     .Include(track => track.MediaType)
                     .Include(track => track.PlaylistTracks)
                     .ThenInclude(playlistTrack => playlistTrack.Playlist)
-                    .FirstOrDefaultAsync();
+                    .FirstOrDefaultAsync(cancellationToken)
+                    .ConfigureAwait(false);
 
                 return _mapper.Map<TrackDetail>(trackFromDb);
             }

@@ -25,7 +25,7 @@ namespace Chinook.Operations.Data.DependencyInjection
                     options.EnableDetailedErrors(isDevelopment);
                     options.EnableSensitiveDataLogging(isDevelopment);
                 })
-                .AddScoped<IOperationsDbContext>(provider => provider.GetService<OperationsDbContext>());
+                .AddScoped<IOperationsDbContext>(provider => provider.GetRequiredService<OperationsDbContext>());
         }
     }
 }

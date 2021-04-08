@@ -30,7 +30,8 @@ namespace Chinook.Catalog.Application.Playlists.Commands.UpdatePlaylist
         {
             var playlistFromDb = await _context
                 .Playlists
-                .FirstOrDefaultAsync(e => e.Id == request.PlaylistId);
+                .FirstOrDefaultAsync(e => e.Id == request.PlaylistId, cancellationToken)
+                .ConfigureAwait(false);
 
             if (playlistFromDb == null)
                 throw new EntityNotFoundException($"A playlist having id '{request.PlaylistId}' could not be found");
@@ -38,7 +39,8 @@ namespace Chinook.Catalog.Application.Playlists.Commands.UpdatePlaylist
             var currentPlaylistTracks = await _context
                 .PlaylistTracks
                 .Where(pt => pt.PlaylistId == playlistFromDb.Id)
-                .ToListAsync();
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
 
             var newPlaylistTracks = (await NormalizeTrackIds(request.TrackIds))
                 .Select(trackId => new PlaylistTrack { PlaylistId = playlistFromDb.Id, TrackId = trackId });
@@ -78,18 +80,6 @@ namespace Chinook.Catalog.Application.Playlists.Commands.UpdatePlaylist
             }
 
             return normalizedTrackIds;
-        }
-
-        private async Task<List<int>> RemoveDuplicates(int playlistId, IReadOnlyCollection<int> trackIds)
-        {
-            var duplicates = await _context
-                .PlaylistTracks
-                .AsNoTracking()
-                .Where(playlist => playlist.PlaylistId == playlistId && trackIds.Contains(playlist.TrackId))
-                .Select(playlist => playlist.TrackId)
-                .ToListAsync();
-
-            return trackIds.Except(duplicates).ToList();
         }
     }
 }

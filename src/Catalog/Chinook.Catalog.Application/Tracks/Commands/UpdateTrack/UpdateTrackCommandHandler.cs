@@ -25,7 +25,8 @@ namespace Chinook.Catalog.Application.Tracks.Commands.UpdateTrack
                 var trackFromDb = await _context
                     .Tracks
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(e => e.Id == request.TrackId);
+                    .FirstOrDefaultAsync(e => e.Id == request.TrackId, cancellationToken)
+                    .ConfigureAwait(false);
 
                 if (trackFromDb == null)
                     throw new EntityNotFoundException($"A track having id '{request.TrackId}' could not be found");

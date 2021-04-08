@@ -25,7 +25,8 @@ namespace Chinook.Catalog.Application.Tracks.Commands.DeleteTrack
                 var track = await _context
                     .Tracks
                     .AsNoTracking()
-                    .FirstOrDefaultAsync(track => track.Id == request.TrackId);
+                    .FirstOrDefaultAsync(track => track.Id == request.TrackId, cancellationToken)
+                    .ConfigureAwait(false);
 
                 if (track == null)
                     throw new DbUpdateException($"Delete track failed. A track having id '{request.TrackId}' could not be found");

@@ -34,7 +34,8 @@ namespace Chinook.Catalog.Application.Playlists.Commands.DeleteTracksFromPlaylis
             var playlistTracksFromDb = await _context
                 .PlaylistTracks
                 .Where(playlist => playlist.PlaylistId == playlistId && validTrackIds.Contains(playlist.TrackId))
-                .ToListAsync();
+                .ToListAsync(cancellationToken)
+                .ConfigureAwait(false);
             _context.PlaylistTracks.RemoveRange(playlistTracksFromDb);
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;

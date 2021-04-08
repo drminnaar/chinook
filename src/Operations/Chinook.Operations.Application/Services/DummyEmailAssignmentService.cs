@@ -35,7 +35,7 @@ namespace Chinook.Operations.Application.Services
                     .Employees
                     .TagWithQueryName("GetEmployeesByEmailAddress")
                     .AsNoTracking()
-                    .Where(e => e.Email!.ToLower().Trim().StartsWith(localPart))
+                    .Where(e => e.Email!.ToLower().Trim().StartsWith(localPart, StringComparison.InvariantCultureIgnoreCase))
                     .ToListAsync();
 
                 if (employees.Count > 1)
@@ -43,7 +43,7 @@ namespace Chinook.Operations.Application.Services
 
                 return email;
             }
-            catch(Exception exception)
+            catch (Exception exception)
             {
                 throw new ApplicationServiceException("The email assignment service failed to assign an email address. See inner exception for details.", exception);
             }
