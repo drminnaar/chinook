@@ -1,5 +1,5 @@
 {
-  "name": "chinook-dotnetcore-3",
+  "name": "chinook",
   "version": "1.0.0",
   "scripts": {
     "build": "dotnet build ./src",
