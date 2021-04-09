@@ -1,3 +1,5 @@
+![chinook-cover](https://repository-images.githubusercontent.com/234649268/c108b300-99e7-11eb-8803-fe1e226e57c3)
+
 # Chinook README
 
 This project is a playground for illustrating technology concepts such as:
@@ -5,7 +7,7 @@ This project is a playground for illustrating technology concepts such as:
 * Architecture and Design
 * API Design
 * Docker
-* Dotnet Core 3.1 For all backend
+* .NET 5 For all backend
 * React (Typescript) For all frontend
 * Database Migrations and Versioning
 
@@ -152,7 +154,7 @@ Before getting started, the following frameworks must be installed on your machi
 
 * Docker
 * Docker-Compose
-* Dotnet Core 3.1
+* .NET 5
 * Node 12
 
 ### Get The Code
