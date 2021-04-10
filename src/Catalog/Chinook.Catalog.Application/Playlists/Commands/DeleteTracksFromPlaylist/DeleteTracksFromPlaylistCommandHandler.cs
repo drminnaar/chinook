@@ -32,11 +32,11 @@ namespace Chinook.Catalog.Application.Playlists.Commands.DeleteTracksFromPlaylis
         {
             var validTrackIds = await ValidateTrackIds(playlistId, trackIds);
             var playlistTracksFromDb = await _context
-                .PlaylistTracks
+                .Compositions
                 .Where(playlist => playlist.PlaylistId == playlistId && validTrackIds.Contains(playlist.TrackId))
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
-            _context.PlaylistTracks.RemoveRange(playlistTracksFromDb);
+            _context.Compositions.RemoveRange(playlistTracksFromDb);
             await _context.SaveChangesAsync(cancellationToken);
             return Unit.Value;
         }
@@ -51,7 +51,7 @@ namespace Chinook.Catalog.Application.Playlists.Commands.DeleteTracksFromPlaylis
             if (trackIds != null && trackIds.Any())
             {
                 var playlistTrackIdsFromDb = await _context
-                    .PlaylistTracks
+                    .Compositions
                     .AsNoTracking()
                     .Where(playlist => playlist.PlaylistId == playlistId && uniqueTrackIds.Contains(playlist.TrackId))
                     .Select(playlist => playlist.TrackId)

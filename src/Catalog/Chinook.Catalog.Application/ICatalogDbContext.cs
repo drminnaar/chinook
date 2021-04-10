@@ -9,7 +9,7 @@ namespace Chinook.Catalog.Application
     {
         DbSet<Track> Tracks { get; }
         DbSet<Playlist> Playlists { get; }
-        DbSet<PlaylistTrack> PlaylistTracks { get; }
+        DbSet<Composition> Compositions { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

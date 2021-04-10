@@ -13,7 +13,7 @@ namespace Chinook.Catalog.Data
 
         public DbSet<Track> Tracks { get; set; } = null!;
         public DbSet<Playlist> Playlists { get; set; } = null!;
-        public DbSet<PlaylistTrack> PlaylistTracks { get; set; } = null!;
+        public DbSet<Composition> Compositions { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -2,10 +2,17 @@
   "name": "chinook",
   "version": "1.0.0",
   "scripts": {
+    "stack:up": "docker-compose -f ./fabric/docker-compose.yml up --detach && docker-compose -f ./fabric/docker-compose.yml ps",
+    "stack:down": "docker-compose -f ./fabric/docker-compose.yml down --volumes --remove-orphans && docker-compose -f ./fabric/flyway/docker-compose-info.yml down --volumes && docker-compose -f ./fabric/flyway/docker-compose-migrate.yml down --volumes && docker-compose -f ./fabric/flyway/docker-compose-validate.yml down --volumes && docker-compose -f ./fabric/docker-compose.yml ps",
+    "stack:status": "docker-compose -f ./fabric/docker-compose.yaml ps",
+    "stack:describe": "docker-compose -f ./fabric/docker-compose.yaml config --services",
+    "db:migrate": "docker-compose -f ./fabric/flyway/docker-compose-migrate.yml up",
+    "db:info": "docker-compose -f ./fabric/flyway/docker-compose-info.yml up",
+    "db:validate": "docker-compose -f ./fabric/flyway/docker-compose-validate.yml up",
     "build": "dotnet build ./src",
-    "catalog": "dotnet watch --project ./src/Catalog/Chinook.Catalog.Api run",
-    "operations": "dotnet watch --project ./src/Operations/Chinook.Operations.Api run",
-    "sales": "dotnet watch --project ./src/Sales/Chinook.Sales.Api run",
+    "api:catalog": "dotnet watch --project ./src/Catalog/Chinook.Catalog.Api run",
+    "api:operations": "dotnet watch --project ./src/Operations/Chinook.Operations.Api run",
+    "api:sales": "dotnet watch --project ./src/Sales/Chinook.Sales.Api run",
     "start": "npx concurrently \"npm run catalog\" \"npm run operations\" \"npm run sales\""
   }
 }

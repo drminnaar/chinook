@@ -1,0 +1,30 @@
+version: '3.5'
+services:
+  chinook_db:
+    container_name: chinook_db
+    image: postgres:12-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./entrypoint-scripts:/docker-entrypoint-initdb.d/
+    networks:
+      - default
+  chinook_admin:
+    container_name: chinook_admin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - 8080:80
+    networks:
+      - default
+networks:
+  default:
+    name: chinook_net

@@ -61,7 +61,7 @@ namespace Chinook.Catalog.Application.Tracks.Queries.GetTrack.Filters
         public ITrackFilterBuilder WherePlaylistIdEquals(int? playlistId)
         {
             if (playlistId > 0)
-                Filter = Filter.And(e => e.PlaylistTracks.Select(e => e.PlaylistId).Contains(playlistId.Value));
+                Filter = Filter.And(e => e.Compositions.Select(e => e.PlaylistId).Contains(playlistId.Value));
 
             return this;
         }

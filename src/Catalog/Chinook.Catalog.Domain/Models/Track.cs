@@ -16,6 +16,6 @@ namespace Chinook.Catalog.Domain.Models
         public Album? Album { get; set; }
         public int MediaTypeId { get; set; }
         public MediaType? MediaType { get; set; }
-        public ICollection<PlaylistTrack> PlaylistTracks { get; } = new HashSet<PlaylistTrack>();
+        public ICollection<Composition> Compositions { get; } = new HashSet<Composition>();
     }
 }

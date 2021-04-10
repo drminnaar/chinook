@@ -1,1 +1,0 @@
-CREATE SCHEMA employee_operations;

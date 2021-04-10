@@ -14,7 +14,7 @@ namespace Chinook.Operations.Data.Models
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
-            entity.ToTable("employee", "employee_operations");
+            entity.ToTable("employee", "operations");
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Id).HasColumnName("employee_id");
             entity.Property(e => e.Address).HasColumnName("address");

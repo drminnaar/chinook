@@ -32,7 +32,7 @@ namespace Chinook.Catalog.Data.Models
             entity.HasOne(e => e.MediaType);
 
             // map playlist tracks relationship
-            entity.HasMany(e => e.PlaylistTracks).WithOne(e => e.Track!);
+            entity.HasMany(e => e.Compositions).WithOne(e => e.Track!);
         }
     }
 }

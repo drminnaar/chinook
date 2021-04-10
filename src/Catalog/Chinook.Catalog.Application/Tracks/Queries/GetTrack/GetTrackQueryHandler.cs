@@ -35,7 +35,7 @@ namespace Chinook.Catalog.Application.Tracks.Queries.GetTrack
                     .Include(track => track.Genre)
                     .Include(track => track.Album!.Artist)
                     .Include(track => track.MediaType)
-                    .Include(track => track.PlaylistTracks)
+                    .Include(track => track.Compositions)
                     .ThenInclude(playlistTrack => playlistTrack.Playlist)
                     .FirstOrDefaultAsync(cancellationToken)
                     .ConfigureAwait(false);

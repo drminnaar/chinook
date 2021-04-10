@@ -6,6 +6,6 @@ namespace Chinook.Catalog.Domain.Models
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
-        public virtual ICollection<PlaylistTrack> PlaylistTracks { get; } = new HashSet<PlaylistTrack>();
+        public virtual ICollection<Composition> PlaylistTracks { get; } = new HashSet<Composition>();
     }
 }

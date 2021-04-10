@@ -45,7 +45,7 @@ namespace Chinook.Catalog.Application.Playlists.CommandsAddTracksToPlaylist
                 .ToList();
 
             var existingTrackIds = await _context
-                .PlaylistTracks
+                .Compositions
                 .AsNoTracking()
                 .Where(pt => pt.PlaylistId == playlistId && newTrackIds.Contains(pt.TrackId))
                 .Select(pt => pt.TrackId)
@@ -54,12 +54,12 @@ namespace Chinook.Catalog.Application.Playlists.CommandsAddTracksToPlaylist
 
             var tracksForAdd = newTrackIds
                 .Except(existingTrackIds)
-                .Select(trackId => new PlaylistTrack { PlaylistId = playlistId, TrackId = trackId })
+                .Select(trackId => new Composition { PlaylistId = playlistId, TrackId = trackId })
                 .ToList();
 
             if (tracksForAdd.Any())
             {
-                _context.PlaylistTracks.AddRange(tracksForAdd);
+                _context.Compositions.AddRange(tracksForAdd);
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

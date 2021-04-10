@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  chinook_flyway:
+    container_name: chinook_flyway
+    image: flyway/flyway:7-alpine
+    command: -url=jdbc:postgresql://chinook_db/chinook -connectRetries=60 -user=postgres -password=password validate
+    volumes:
+      - ./migrations:/flyway/sql
+    networks:
+      - default
+networks:
+  default:
+    external:
+      name: chinook_net

@@ -35,7 +35,7 @@ namespace Chinook.Catalog.Application.Playlists.Commands.CreatePlaylist
             var trackIds = await NormalizeTrackIds(request.TrackIds);
 
             var playlist = _mapper.Map<Playlist>(request);
-            trackIds.ForEach(trackId => playlist.PlaylistTracks.Add(new PlaylistTrack { TrackId = trackId }));
+            trackIds.ForEach(trackId => playlist.PlaylistTracks.Add(new Composition { TrackId = trackId }));
 
             _context.Playlists.Add(playlist);
 

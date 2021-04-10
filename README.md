@@ -27,7 +27,7 @@ The overall system design has the traits of a [Modular Monolith]. The system is 
 
 There is a single database comprised of 3 schemas that closely relate to the aforementioned modules.
 
-The following 2 diagrams illustrate 2 potential architectural approaches. The big difference between the 2 different approaches is with regards to the API layer. 
+The following 2 diagrams illustrate 2 potential architectural approaches. The big difference between the 2 different approaches is with regards to the API layer.
 
 #### High Level View 1
 
@@ -56,7 +56,6 @@ Each sub-system (module) high-level architecture has been influenced by the foll
 As can be seen by the diagram below, the arrows are always pointing inwards (or down) from one layer to the next. The whole idea is to ensure that dependants that change the least are at the center, with dependants that change the most at the top (outer) most level.
 
 ![chinook-module-architecture](https://user-images.githubusercontent.com/33935506/72653239-d2cef680-39ee-11ea-8215-e98386d32637.png)
-
 
 **Domain and Domain Services**
   
@@ -155,7 +154,7 @@ Before getting started, the following frameworks must be installed on your machi
 * Docker
 * Docker-Compose
 * .NET 5
-* Node 12
+* Node 12 or later
 
 ### Get The Code
 
@@ -169,6 +168,40 @@ git clone https://github.com/drminnaar/chinook.git
 git clone git@github.com:drminnaar/chinook.git
 ```
 
+### NPM Task Runner
+
+NPM is being used as a task runner of sorts. It's the reason for having a dependency on Node and NPM. Although the _dotnet CLI_ is fantastic, I wanted to illustrate how one might combine the 2. Therefore, if you have a look at the root of the solution, you will notice a packages.json file that has a number of tasks setup. It also have the "concurrently" package installed to run tasks in parallel.
+
+I have created tasks to:
+
+* manage stack
+* manage db
+* build
+* manage apis
+
+For example:
+
+```json
+{
+  "name": "chinook",
+  "version": "1.0.0",
+  "scripts": {
+    "stack:up": "docker-compose -f ./fabric/docker-compose.yml up --detach && docker-compose -f ./fabric/docker-compose.yml ps",
+    "stack:down": "docker-compose -f ./fabric/docker-compose.yml down --volumes --remove-orphans && docker-compose -f ./fabric/flyway/docker-compose-info.yml down --volumes && docker-compose -f ./fabric/flyway/docker-compose-migrate.yml down --volumes && docker-compose -f ./fabric/flyway/docker-compose-validate.yml down --volumes && docker-compose -f ./fabric/docker-compose.yml ps",
+    "stack:status": "docker-compose -f ./fabric/docker-compose.yaml ps",
+    "stack:describe": "docker-compose -f ./fabric/docker-compose.yaml config --services",
+    "db:migrate": "docker-compose -f ./fabric/flyway/docker-compose-migrate.yml up",
+    "db:info": "docker-compose -f ./fabric/flyway/docker-compose-info.yml up",
+    "db:validate": "docker-compose -f ./fabric/flyway/docker-compose-validate.yml up",
+    "build": "dotnet build ./src",
+    "api:catalog": "dotnet watch --project ./src/Catalog/Chinook.Catalog.Api run",
+    "api:operations": "dotnet watch --project ./src/Operations/Chinook.Operations.Api run",
+    "api:sales": "dotnet watch --project ./src/Sales/Chinook.Sales.Api run",
+    "start": "npx concurrently \"npm run catalog\" \"npm run operations\" \"npm run sales\""
+  }
+}
+```
+
 ### Database Setup
 
 The primary database that will be used is a Postgres database based on the '**_chinook_**' Sql database. The initial inspiration was taken from the [cwoodruff/ChinookDatabase
@@ -178,119 +211,68 @@ The primary database that will be used is a Postgres database based on the '**_c
 
 A [Docker] container is used to host a [Postgresql] database. Furthermore, a [Docker-Compose] file has been included that can be used to more conveniently startup a [Postgresql] database. For further convenience, a database refresh script has been included for _bash_ and _powershell_. The script files can be used to spin up a database environment using postgres with all the database migrations executed using [Flyway].
 
-__For Linux using Bash:__
+Use the following commands to start database:
 
 ```bash
-# only run once to give script execute permissions
-chmod +x ./refresh-chinook-db.sh
+# using docker-compose directly
+docker-compose -f ./fabric/docker-compose.yml up --detach
 
-# create chinook database and populate with data
-./refresh-chinook-db.sh
+# using npm task runner
+npm run stack:up
 ```
 
-__For any OS running Powershell:__
+#### Stop Database
+
+Use the following commands to stop database and cleanup containers, volumes, and networks:
 
 ```bash
-# create chinook database and populate with data
-./refresh-chinook-db.ps1
+# using docker-compose directly
+docker-compose -f ./fabric/docker-compose.yml down --volumes
+
+# using npm task runner
+npm run stack:down
 ```
 
-Once the script completes successfully, you should see an output in your console that resembles something that looks like the following:
+#### Get Database Migrations Info
 
-```diff
-Script started! Creating new chinook database using Docker, Docker-Compose, and Postgres.
+I use [Flyway] to manage database migrations.
 
-Setup chinook Postgres database in Docker container started
-pg-chinook-data
-Stopping pg-chinook ... done
-Stopping pg-admin   ... done
-Removing pg-chinook ... done
-Removing pg-admin   ... done
-Removing network chinooknet
-Creating network "chinooknet" with the default driver
-Creating pg-chinook ... done
-Creating pg-admin   ... done
-Setup of chinook Postgres database in Docker container complete
-
-Drop and recreate any existing chinook database started ...
-dropdb: could not connect to database template1: FATAL:  the database system is starting up
-createdb: could not connect to database template1: FATAL:  the database system is starting up
-Drop and recreate any existing chinook database completed ...
-
-Run migrations using Flyway started ...
-Flyway Community Edition 6.0.0-beta2 by Boxfuse
-Database: jdbc:postgresql://172.22.0.5:5432/chinook (PostgreSQL 11.6)
-Successfully validated 25 migrations (execution time 00:02.771s)
-Current version of schema "public": << Empty Schema >>
-Migrating schema "public" to version 1.1 - Create employee operations schema
-Migrating schema "public" to version 1.2 - Create employee table
-Migrating schema "public" to version 2.1 - Create music catalog schema
-Migrating schema "public" to version 2.2 - Create genre table
-Migrating schema "public" to version 2.3 - Create artist table
-Migrating schema "public" to version 2.4 - Create album table
-Migrating schema "public" to version 2.5 - Create mediatype table
-Migrating schema "public" to version 2.6 - Create track table
-Migrating schema "public" to version 2.7 - Create playlist table
-Migrating schema "public" to version 2.8 - Create playlisttrack table
-Migrating schema "public" to version 3.1 - Create sales schema
-Migrating schema "public" to version 3.2 - Create customer table
-Migrating schema "public" to version 3.3 - Create invoice table
-Migrating schema "public" to version 3.4 - Create invoiceline table
-Migrating schema "public" to version 4.1 - Add genre data
-Migrating schema "public" to version 4.2 - Add mediatype data
-Migrating schema "public" to version 4.3 - Add artist data
-Migrating schema "public" to version 4.4 - Add album data
-Migrating schema "public" to version 4.5 - Add track data
-Migrating schema "public" to version 4.6 - Add employee data
-Migrating schema "public" to version 4.7 - Add customer data
-Migrating schema "public" to version 4.8 - Add invoice data
-Migrating schema "public" to version 4.9 - Add invoiceline data
-Migrating schema "public" to version 4.10 - Add playlist data
-Migrating schema "public" to version 4.11 - Add playlisttrack data
-Successfully applied 25 migrations to schema "public" (execution time 00:05.159s)
-Run migrations using Flyway completed ...
-
-Script completed! The chinook database was created successfully!
-Connect to chinook postgres database using the following details (as per 'docker-compose-pg.yml'):
-  - server: localhost (native client) or 172.22.0.5 is using pgAdmin (http://localhost:8080)
-  - username: postgres
-  - password: password
-```
-
-### Get Node Ready
-
-NPM is being used as a task runner of sorts. It's the reason for having a dependency on Node and NPM. Although the _dotnet CLI_ is fantastic, I wanted to illustrate how one might combine the 2. Therefore, if you have a look at the root of the solution, you will notice a packages.json file that has a number of tasks setup. It also have the "concurrently" package installed to run tasks in parallel.
-
-For example:
-
-```json
-"scripts": {
-    "build": "dotnet build ./src",
-    "catalog": "dotnet watch --project ./src/Catalog/Chinook.Catalog.Api run",
-    "operations": "dotnet watch --project ./src/Operations/Chinook.Operations.Api run",
-    "sales": "dotnet watch --project ./src/Sales/Chinook.Sales.Api run",
-    "start": "concurrently \"npm run catalog\" \"npm run operations\" \"npm run sales\""
-}
-```
-
-From the command line, type the following:
+Use the following commands to get database migration info:
 
 ```bash
-# change to project root
-cd ./chinook
+# using docker-compose directly
+docker-compose -f ./fabric/flyway/docker-compose-info.yml up
 
-# install node_modules
-npm install
+# using npm task runner
+npm run db:info
 ```
 
-### Build The Code
+#### Validate Database Migrations
+
+I use [Flyway] to manage database migrations.
+
+Use the following commands to validate database migrations:
 
 ```bash
-# change to project root
-cd ./chinook
+# using docker-compose directly
+docker-compose -f ./fabric/flyway/docker-compose-validate.yml up
 
-# build solution
-npm run build
+# using npm task runner
+npm run db:validate
+```
+
+#### Migrate Database Migrations
+
+I use [Flyway] to manage database migrations.
+
+Use the following commands to migrate database migrations:
+
+```bash
+# using docker-compose directly
+docker-compose -f ./fabric/flyway/docker-compose-migrate.yml up
+
+# using npm task runner
+npm run db:migrate
 ```
 
 ### Running the Api's
@@ -298,17 +280,14 @@ npm run build
 Each Api can be run from a _Solution file_, or via the command line at the Api path. However, for convenience, one can run any of the Api's using _npm_ as follows:
 
 ```bash
-# change to project root
-cd ./chinook
-
 # To run 'Catalog Api' (http://localhost:5000)
-npm run catalog
+npm run api:catalog
 
 # To run 'Operations Api' (http://localhost:5001)
-npm run operations
+npm run api:operations
 
 # To run 'Sales Api' (http://localhost:5002)
-npm run sales
+npm run api:sales
 
 # To run all Api's
 npm start
@@ -322,53 +301,53 @@ This project will be evolving a lot over time as there is still lots to do. This
 
 Tests
 
-- Currently there are no tests. Add tests for all modules and related components.
+* Currently there are no tests. Add tests for all modules and related components.
 
 REST Api
 
-- Add caching strategies
-- Add security
-- Add HATEOAS support
-- Add NSwag
+* Add caching strategies
+* Add security
+* Add HATEOAS support
+* Add NSwag
 
 gRPC Api
 
-- Find a good usecase to use gRPC
+* Find a good usecase to use gRPC
 
 GraphQL Api
 
-- Find a good usecase to use GraphQL
+* Find a good usecase to use GraphQL
 
 Application
 
-- Add more validation rules
-- Add logging
+* Add more validation rules
+* Add logging
 
 Domain
 
-- Introduce new scenarios that require business logic
+* Introduce new scenarios that require business logic
 
 Docker
 
-- Add docker support for "Catalog Api"
-- Add docker support for "Operations Api"
-- Add docker support for "Sales Api"
+* Add docker support for "Catalog Api"
+* Add docker support for "Operations Api"
+* Add docker support for "Sales Api"
 
 Events
 
-- Add domain events for each of the modules
+* Add domain events for each of the modules
 
 Database
 
-- Need a good usecase for using a NoSQL database
+* Need a good usecase for using a NoSQL database
 
 UI
 
-- Build a React frontend
+* Build a React frontend
 
 Documentation
 
-- The documentation is not great. Potentially need to build out documentation in wiki.
+* The documentation is not great. Potentially need to build out documentation in wiki.
 
 ---
 
@@ -376,12 +355,13 @@ Documentation
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/drminnaar/chinook/tags).
 
+* [V1.0.0 - .NET Core 3.1 Version](https://github.com/drminnaar/chinook/releases/tag/V1.0.0)
+
 ---
 
 ## 6. Authors
 
 * **Douglas Minnaar** - *Initial work* - [drminnaar](https://github.com/drminnaar)
-
 
 [Docker]: https://www.docker.com
 [Docker-Compose]: https://docs.docker.com/compose/

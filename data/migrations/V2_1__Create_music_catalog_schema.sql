@@ -1,1 +1,0 @@
-CREATE SCHEMA music_catalog;

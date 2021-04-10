@@ -37,16 +37,16 @@ namespace Chinook.Catalog.Application.Playlists.Commands.UpdatePlaylist
                 throw new EntityNotFoundException($"A playlist having id '{request.PlaylistId}' could not be found");
 
             var currentPlaylistTracks = await _context
-                .PlaylistTracks
+                .Compositions
                 .Where(pt => pt.PlaylistId == playlistFromDb.Id)
                 .ToListAsync(cancellationToken)
                 .ConfigureAwait(false);
 
             var newPlaylistTracks = (await NormalizeTrackIds(request.TrackIds))
-                .Select(trackId => new PlaylistTrack { PlaylistId = playlistFromDb.Id, TrackId = trackId });
+                .Select(trackId => new Composition { PlaylistId = playlistFromDb.Id, TrackId = trackId });
 
-            _context.PlaylistTracks.RemoveRange(currentPlaylistTracks);
-            _context.PlaylistTracks.AddRange(newPlaylistTracks);
+            _context.Compositions.RemoveRange(currentPlaylistTracks);
+            _context.Compositions.AddRange(newPlaylistTracks);
             playlistFromDb.Name = request.Name;
 
             await _context.SaveChangesAsync(cancellationToken);

@@ -1,0 +1,5 @@
+INSERT INTO music_catalog.media_type ("media_type_id", "created_date", "updated_date", "name") VALUES (1, NOW(), NOW(), 'MPEG audio file') ON CONFLICT DO NOTHING;
+INSERT INTO music_catalog.media_type ("media_type_id", "created_date", "updated_date", "name") VALUES (2, NOW(), NOW(), 'Protected AAC audio file') ON CONFLICT DO NOTHING;
+INSERT INTO music_catalog.media_type ("media_type_id", "created_date", "updated_date", "name") VALUES (3, NOW(), NOW(), 'Protected MPEG-4 video file') ON CONFLICT DO NOTHING;
+INSERT INTO music_catalog.media_type ("media_type_id", "created_date", "updated_date", "name") VALUES (4, NOW(), NOW(), 'Purchased AAC audio file') ON CONFLICT DO NOTHING;
+INSERT INTO music_catalog.media_type ("media_type_id", "created_date", "updated_date", "name") VALUES (5, NOW(), NOW(), 'AAC audio file') ON CONFLICT DO NOTHING;
